@@ -1,0 +1,80 @@
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// This security rules file assumes the following data structures:
+//
+// Collection: universities
+// Document ID: {universityId}
+// Fields:
+//   - id: string (required)
+//   - name: string (required)
+//   - logo: string (required)
+//   - type: string (required, 'კერძო' | 'სახელმწიფო')
+//   - city: string (required)
+//   - address: string (required)
+//   - phone: string (required)
+//   - website: string (required)
+//   - priceRange: string (required)
+//   - category: string (required, 'უნივერსიტეტი' | 'კოლეჯი' | 'მართლმადიდებლური')
+//   - faculties: list of objects (required)
+//
+// ===============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function isValidUniversity(data) {
+      return data.id is string && data.id.size() > 0 &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 500 &&
+             data.logo is string && data.logo.size() > 0 &&
+             data.type in ['კერძო', 'სახელმწიფო'] &&
+             data.city is string && data.city.size() > 0 &&
+             data.address is string && data.address.size() > 0 &&
+             data.phone is string && data.phone.size() > 0 &&
+             data.website is string && data.website.size() > 0 &&
+             data.priceRange is string && data.priceRange.size() > 0 &&
+             data.category in ['უნივერსიტეტი', 'კოლეჯი', 'მართლმადიდებლური'] &&
+             data.faculties is list;
+    }
+
+    function isAdmin() {
+      // Default admin check using the user's email
+      return isAuthenticated() && 
+             request.auth.token.email == "ntitit17@gmail.com" && 
+             request.auth.token.email_verified == true;
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    match /universities/{universityId} {
+      // Allow everyone to read university data
+      allow read: if true;
+      
+      // Only admins can create or update university data
+      allow create: if isAdmin() && isValidUniversity(request.resource.data);
+      allow update: if isAdmin() && isValidUniversity(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

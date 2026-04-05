@@ -1,0 +1,38 @@
+{
+  "entities": {
+    "University": {
+      "title": "University",
+      "description": "A higher educational institution in Georgia.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the university." },
+        "name": { "type": "string", "description": "Official name of the university." },
+        "logo": { "type": "string", "description": "URL of the university logo." },
+        "type": { "type": "string", "enum": ["კერძო", "სახელმწიფო"], "description": "Private or State institution." },
+        "city": { "type": "string", "description": "City where the university is located." },
+        "address": { "type": "string", "description": "Physical address." },
+        "phone": { "type": "string", "description": "Contact phone number." },
+        "website": { "type": "string", "description": "Official website URL." },
+        "priceRange": { "type": "string", "description": "Range of tuition fees." },
+        "category": { "type": "string", "enum": ["უნივერსიტეტი", "კოლეჯი", "მართლმადიდებლური"], "description": "Category of the institution." },
+        "faculties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" }
+            }
+          }
+        }
+      },
+      "required": ["id", "name", "logo", "type", "city", "address", "phone", "website", "priceRange", "category", "faculties"]
+    }
+  },
+  "firestore": {
+    "universities": {
+      "schema": "University",
+      "description": "Collection of all higher educational institutions."
+    }
+  }
+}

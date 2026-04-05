@@ -1,17 +1,134 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, MapPin, Phone, Globe, GraduationCap, 
   ArrowLeft, Bookmark, X, ChevronRight,
-  ExternalLink
+  ExternalLink, Database, Loader2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { universities, University } from '../data/universities';
+import { universities as localUniversities, University } from '../data/universities';
+import { db, auth } from '../firebase';
+import { collection, onSnapshot, setDoc, doc, getDocFromServer } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+
+enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId: string | undefined;
+    email: string | null | undefined;
+    emailVerified: boolean | undefined;
+    isAnonymous: boolean | undefined;
+    tenantId: string | null | undefined;
+    providerInfo: {
+      providerId: string;
+      displayName: string | null;
+      email: string | null;
+      photoUrl: string | null;
+    }[];
+  }
+}
+
+const handleFirestoreError = (error: unknown, operationType: OperationType, path: string | null) => {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo: auth.currentUser?.providerData.map(provider => ({
+        providerId: provider.providerId,
+        displayName: provider.displayName,
+        email: provider.email,
+        photoUrl: provider.photoURL
+      })) || []
+    },
+    operationType,
+    path
+  };
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  // We don't throw here to avoid crashing the UI, but we log it.
+};
 
 export const UniversitiesPage: React.FC = () => {
+  const [universities, setUniversities] = useState<University[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedUni, setSelectedUni] = useState<University | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<'ყველა' | 'უნივერსიტეტი' | 'კოლეჯი' | 'მართლმადიდებლური'>('ყველა');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  useEffect(() => {
+    // Test connection
+    const testConnection = async () => {
+      try {
+        await getDocFromServer(doc(db, 'test', 'connection'));
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('the client is offline')) {
+          console.error("Please check your Firebase configuration.");
+        }
+      }
+    };
+    testConnection();
+
+    // Auth listener for admin check
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      setIsAdmin(user?.email === 'ntitit17@gmail.com' && user?.emailVerified);
+    });
+
+    // Firestore listener
+    const path = 'universities';
+    const unsubscribeFirestore = onSnapshot(
+      collection(db, path),
+      (snapshot) => {
+        const uniData = snapshot.docs.map(doc => doc.data() as University);
+        // If Firestore is empty, we can fallback to local data for initial view
+        // but the goal is to use Firestore.
+        setUniversities(uniData.length > 0 ? uniData : localUniversities);
+        setLoading(false);
+      },
+      (error) => {
+        handleFirestoreError(error, OperationType.GET, path);
+        // Fallback to local data on error
+        setUniversities(localUniversities);
+        setLoading(false);
+      }
+    );
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeFirestore();
+    };
+  }, []);
+
+  const seedData = async () => {
+    if (!isAdmin || isSeeding) return;
+    setIsSeeding(true);
+    try {
+      for (const uni of localUniversities) {
+        await setDoc(doc(db, 'universities', uni.id), uni);
+      }
+      alert('მონაცემები წარმატებით აიტვირთა Firestore-ში!');
+    } catch (error) {
+      handleFirestoreError(error, OperationType.WRITE, 'universities');
+      alert('შეცდომა მონაცემების ატვირთვისას.');
+    } finally {
+      setIsSeeding(false);
+    }
+  };
 
   const filteredUnis = universities.filter(uni => {
     const matchesSearch = uni.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -71,6 +188,20 @@ export const UniversitiesPage: React.FC = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4">
+            {isAdmin && (
+              <button
+                onClick={seedData}
+                disabled={isSeeding}
+                className="flex items-center gap-2 px-6 py-4 rounded-[20px] bg-phoenix-magenta/20 border border-phoenix-magenta/30 text-phoenix-magenta hover:bg-phoenix-magenta/30 transition-all disabled:opacity-50"
+              >
+                {isSeeding ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Database className="w-5 h-5" />
+                )}
+                <span className="text-sm font-bold">მონაცემების სინქრონიზაცია</span>
+              </button>
+            )}
             <div className="relative w-full sm:w-[350px] group">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20 group-focus-within:text-phoenix-cyan transition-colors" />
               <input 
@@ -102,58 +233,73 @@ export const UniversitiesPage: React.FC = () => {
         </div>
 
         {/* Universities Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredUnis.map((uni, i) => (
-            <motion.div
-              key={uni.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -8 }}
-              className="glass border-white/5 rounded-[32px] p-8 flex flex-col sm:flex-row gap-8 group cursor-pointer hover:border-white/20 transition-all relative overflow-hidden"
-              onClick={() => setSelectedUni(uni)}
-            >
-              {/* Background Accent */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-phoenix-cyan/5 to-transparent blur-3xl" />
-              
-              {/* Logo Section */}
-              <div className="w-full sm:w-32 h-32 rounded-2xl bg-white p-4 flex-shrink-0 flex items-center justify-center relative z-10 shadow-2xl shadow-black/20">
-                <img 
-                  src={uni.logo} 
-                  alt={uni.name} 
-                  className="w-full h-full object-contain" 
-                  referrerPolicy="no-referrer" 
-                />
-              </div>
-
-              {/* Content Section */}
-              <div className="flex-grow flex flex-col justify-between relative z-10">
-                <div className="flex justify-between items-start gap-4 mb-4">
-                  <h3 className="text-xl font-bold leading-tight group-hover:text-phoenix-cyan transition-colors line-clamp-2">
-                    {uni.name}
-                  </h3>
-                  <button className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/20 hover:text-phoenix-orange flex-shrink-0">
-                    <Bookmark className="w-5 h-5" />
-                  </button>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-32">
+            <Loader2 className="w-12 h-12 text-phoenix-cyan animate-spin mb-4" />
+            <p className="text-white/40 font-medium">იტვირთება მონაცემები...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {filteredUnis.map((uni, i) => (
+              <motion.div
+                key={uni.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -8 }}
+                className="glass border-white/5 rounded-[32px] p-8 flex flex-col sm:flex-row gap-8 group cursor-pointer hover:border-white/20 transition-all relative overflow-hidden"
+                onClick={() => setSelectedUni(uni)}
+              >
+                {/* Background Accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-phoenix-cyan/5 to-transparent blur-3xl" />
+                
+                {/* Logo Section */}
+                <div className="w-full sm:w-32 h-32 rounded-2xl bg-white p-4 flex-shrink-0 flex items-center justify-center relative z-10 shadow-2xl shadow-black/20">
+                  <img 
+                    src={uni.logo} 
+                    alt={uni.name} 
+                    className="w-full h-full object-contain" 
+                    referrerPolicy="no-referrer" 
+                  />
                 </div>
 
-                <div className="flex flex-wrap gap-3 mt-auto">
-                  <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[11px] font-bold uppercase tracking-wider flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${uni.type === 'კერძო' ? 'bg-phoenix-orange' : 'bg-phoenix-cyan'}`} />
-                    {uni.type}
+                {/* Content Section */}
+                <div className="flex-grow flex flex-col justify-between relative z-10">
+                  <div className="flex justify-between items-start gap-4 mb-4">
+                    <div className="flex-grow">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[10px] font-mono font-black text-phoenix-cyan bg-phoenix-cyan/10 px-2 py-0.5 rounded-md">
+                          {uni.code}
+                        </span>
+                        <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">კოდი</span>
+                      </div>
+                      <h3 className="text-xl font-bold leading-tight group-hover:text-phoenix-cyan transition-colors line-clamp-2">
+                        {uni.name}
+                      </h3>
+                    </div>
+                    <button className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/20 hover:text-phoenix-orange flex-shrink-0">
+                      <Bookmark className="w-5 h-5" />
+                    </button>
                   </div>
-                  <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[11px] font-bold uppercase tracking-wider flex items-center gap-2">
-                    <GraduationCap className="w-3.5 h-3.5 text-phoenix-magenta" />
-                    {uni.faculties.length} ფაკულტეტი
-                  </div>
-                  <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 text-phoenix-yellow">
-                    {uni.priceRange}
+
+                  <div className="flex flex-wrap gap-3 mt-auto">
+                    <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[11px] font-bold uppercase tracking-wider flex items-center gap-2">
+                      <div className={`w-2 h-2 rounded-full ${uni.type === 'კერძო' ? 'bg-phoenix-orange' : 'bg-phoenix-cyan'}`} />
+                      {uni.type}
+                    </div>
+                    <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[11px] font-bold uppercase tracking-wider flex items-center gap-2">
+                      <GraduationCap className="w-3.5 h-3.5 text-phoenix-magenta" />
+                      {uni.faculties.length} ფაკულტეტი / {uni.programCount} პროგრამა
+                    </div>
+                    <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 text-phoenix-yellow">
+                      {uni.priceRange}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Empty State */}
         {filteredUnis.length === 0 && (
@@ -245,6 +391,16 @@ export const UniversitiesPage: React.FC = () => {
                             {selectedUni.website}
                             <ExternalLink className="w-3 h-3" />
                           </a>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4 group">
+                        <div className="p-3 rounded-xl bg-phoenix-yellow/10 text-phoenix-yellow group-hover:scale-110 transition-transform">
+                          <GraduationCap className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-1">პროგრამების რაოდენობა</div>
+                          <div className="text-sm font-medium">{selectedUni.programCount} პროგრამა</div>
                         </div>
                       </div>
                     </div>

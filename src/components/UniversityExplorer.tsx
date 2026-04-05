@@ -84,7 +84,12 @@ export const UniversityExplorer: React.FC<UniversityExplorerProps> = ({ isOpen, 
                           <img src={uni.logo} alt={uni.name} className="w-full h-full object-contain p-2" referrerPolicy="no-referrer" />
                         </div>
                         <div className="flex-grow overflow-hidden">
-                          <h3 className="text-sm font-bold truncate group-hover:text-phoenix-cyan transition-colors">{uni.name}</h3>
+                          <div className="flex items-center justify-between mb-1">
+                            <h3 className="text-sm font-bold truncate group-hover:text-phoenix-cyan transition-colors">{uni.name}</h3>
+                            <span className="text-[10px] font-mono text-phoenix-cyan bg-phoenix-cyan/10 px-2 py-0.5 rounded-md ml-2">
+                              {uni.code}
+                            </span>
+                          </div>
                           <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">{uni.type}</span>
                         </div>
                         <ChevronRight className={`w-4 h-4 transition-transform ${selectedUni?.id === uni.id ? 'rotate-90' : ''}`} />
@@ -127,6 +132,10 @@ export const UniversityExplorer: React.FC<UniversityExplorerProps> = ({ isOpen, 
                             <a href={`https://${selectedUni.website}`} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-phoenix-cyan transition-colors">
                               {selectedUni.website}
                             </a>
+                          </div>
+                          <div className="flex items-center gap-3 text-white/60">
+                            <GraduationCap className="w-5 h-5 text-phoenix-yellow" />
+                            <span className="text-sm">{selectedUni.programCount} პროგრამა</span>
                           </div>
                         </div>
                       </div>

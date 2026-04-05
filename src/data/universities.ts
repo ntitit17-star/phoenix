@@ -6,6 +6,7 @@ export interface Faculty {
 export interface University {
   id: string;
   name: string;
+  code: string;
   logo: string;
   type: 'კერძო' | 'სახელმწიფო';
   city: string;
@@ -13,6 +14,7 @@ export interface University {
   phone: string;
   website: string;
   faculties: Faculty[];
+  programCount: number;
   priceRange: string;
   category: 'უნივერსიტეტი' | 'კოლეჯი' | 'მართლმადიდებლური';
 }
@@ -21,12 +23,14 @@ export const universities: University[] = [
   {
     id: 'tsu',
     name: 'სსიპ - ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი',
+    code: '001',
     logo: 'https://www.tsu.ge/assets/images/logo-ka.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ჭავჭავაძის გამზ. 1',
     phone: '+995 32 2 25 04 84',
     website: 'www.tsu.ge',
+    programCount: 53,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -40,12 +44,14 @@ export const universities: University[] = [
   {
     id: 'tsmu',
     name: 'სსიპ - თბილისის სახელმწიფო სამედიცინო უნივერსიტეტი',
+    code: '006',
     logo: 'https://tsmu.edu/images/logo.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, ვაჟა-ფშაველას გამზ. 33',
     phone: '+995 32 2 54 24 39',
     website: 'www.tsmu.edu',
+    programCount: 13,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -57,12 +63,14 @@ export const universities: University[] = [
   {
     id: 'iliauni',
     name: 'სსიპ - ილიას სახელმწიფო უნივერსიტეტი',
+    code: '010',
     logo: 'https://iliauni.edu.ge/uploads/other/17/17826.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, ქ. ჩოლოყაშვილის გამზ. 3/5',
     phone: '+995 32 2 22 00 09',
     website: 'www.iliauni.edu.ge',
+    programCount: 40,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -73,12 +81,14 @@ export const universities: University[] = [
   {
     id: 'atsu',
     name: 'სსიპ - აკაკი წერეთლის სახელმწიფო უნივერსიტეტი',
+    code: '009',
     logo: 'https://atsu.edu.ge/images/logo.png',
     type: 'სახელმწიფო',
     city: 'ქუთაისი',
     address: 'ქუთაისი, თამარ მეფის ქ. 59',
     phone: '+995 431 24 21 55',
     website: 'www.atsu.edu.ge',
+    programCount: 52,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -89,12 +99,14 @@ export const universities: University[] = [
   {
     id: 'tafu',
     name: 'სსიპ - საქართველოს შოთა რუსთაველის თეატრისა და კინოს სახელმწიფო უნივერსიტეტი',
-    logo: 'https://picsum.photos/seed/tafu/200/200',
+    code: '004',
+    logo: 'https://tafu.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, შოთა რუსთაველის გამზ. 19',
     phone: '+995 32 2 98 30 73',
     website: 'www.tafu.edu.ge',
+    programCount: 14,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -105,12 +117,14 @@ export const universities: University[] = [
   {
     id: 'bsu',
     name: 'სსიპ - ბათუმის შოთა რუსთაველის სახელმწიფო უნივერსიტეტი',
+    code: '114',
     logo: 'https://bsu.edu.ge/images/logo.png',
     type: 'სახელმწიფო',
     city: 'ბათუმი',
     address: 'ბათუმი, ნინოშვილის ქ. 35',
     phone: '+995 422 27 17 80',
     website: 'www.bsu.edu.ge',
+    programCount: 42,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -121,12 +135,14 @@ export const universities: University[] = [
   {
     id: 'conservatory',
     name: 'სსიპ - თბილისის ვანო სარაჯიშვილის სახელობის სახელმწიფო კონსერვატორია',
+    code: '002',
     logo: 'https://picsum.photos/seed/music/200/200',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, გრიბოედოვის ქ. 8-10',
     phone: '+995 32 2 92 30 15',
-    website: 'www.conservatory.edu.ge',
+    website: 'www.tsc.edu.ge',
+    programCount: 25,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -137,12 +153,14 @@ export const universities: University[] = [
   {
     id: 'agruni',
     name: 'ა(ა)იპ - საქართველოს აგრარული უნივერსიტეტი',
-    logo: 'https://picsum.photos/seed/agruni/200/200',
+    code: '005',
+    logo: 'https://agruni.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, დავით აღმაშენებლის ხეივანი 240',
     phone: '+995 32 2 20 01 01',
     website: 'www.agruni.edu.ge',
+    programCount: 7,
     priceRange: '2250 - 6900 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -153,12 +171,14 @@ export const universities: University[] = [
   {
     id: 'tesau',
     name: 'სსიპ - იაკობ გოგებაშვილის სახელობის თელავის სახელმწიფო უნივერსიტეტი',
+    code: '071',
     logo: 'https://tesau.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'თელავი',
     address: 'თელავი, ქართული უნივერსიტეტის ქ. 1',
     phone: '+995 350 27 24 01',
     website: 'www.tesau.edu.ge',
+    programCount: 18,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -169,12 +189,14 @@ export const universities: University[] = [
   {
     id: 'artacademy',
     name: 'სსიპ - თბილისის აპოლონ ქუთათელაძის სახელობის სახელმწიფო სამხატვრო აკადემია',
-    logo: 'https://picsum.photos/seed/art/200/200',
+    code: '098',
+    logo: 'https://art.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, გრიბოედოვის ქ. 22',
     phone: '+995 32 2 93 69 59',
     website: 'www.art.edu.ge',
+    programCount: 23,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -185,12 +207,14 @@ export const universities: University[] = [
   {
     id: 'gtu',
     name: 'სსიპ - საქართველოს ტექნიკური უნივერსიტეტი',
+    code: '003',
     logo: 'https://gtu.ge/images/logo_ka.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, მ. კოსტავას ქ. 77',
     phone: '+995 32 2 36 51 52',
     website: 'www.gtu.ge',
+    programCount: 78,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -201,12 +225,14 @@ export const universities: University[] = [
   {
     id: 'sou',
     name: 'სსიპ - სოხუმის სახელმწიფო უნივერსიტეტი',
-    logo: 'https://picsum.photos/seed/sou/200/200',
+    code: '012',
+    logo: 'https://sou.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, პოლიტკოვსკაიას ქ. 61',
     phone: '+995 32 2 54 14 25',
     website: 'www.sou.edu.ge',
+    programCount: 28,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -217,12 +243,14 @@ export const universities: University[] = [
   {
     id: 'freeuni',
     name: 'შპს - თბილისის თავისუფალი უნივერსიტეტი',
+    code: '036',
     logo: 'https://freeuni.edu.ge/sites/default/files/logo_ka.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, დავით აღმაშენებლის ხეივანი 240',
     phone: '+995 32 2 20 09 01',
     website: 'www.freeuni.edu.ge',
+    programCount: 10,
     priceRange: '2250 - 8900 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -233,12 +261,14 @@ export const universities: University[] = [
   {
     id: 'dtmu',
     name: 'შპს - დავით ტვილდიანის სამედიცინო უნივერსიტეტი',
+    code: '052',
     logo: 'https://dtmu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ლუბლიანას ქ. 2/6',
     phone: '+995 32 2 51 68 98',
-    website: 'www.dtmu.ge',
+    website: 'www.dtmu.edu.ge',
+    programCount: 2,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -248,12 +278,14 @@ export const universities: University[] = [
   {
     id: 'ug',
     name: 'შპს - საქართველოს უნივერსიტეტი',
+    code: '121',
     logo: 'https://ug.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, მ. კოსტავას ქ. 77ა',
     phone: '+995 32 2 55 22 22',
     website: 'www.ug.edu.ge',
+    programCount: 33,
     priceRange: '2250 - 5500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -264,12 +296,14 @@ export const universities: University[] = [
   {
     id: 'cu',
     name: 'შპს - კავკასიის უნივერსიტეტი',
+    code: '122',
     logo: 'https://cu.edu.ge/images/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, პაატა სააკაძის ქ. 1',
     phone: '+995 32 2 37 77 77',
     website: 'www.cu.edu.ge',
+    programCount: 37,
     priceRange: '2250 - 6500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -280,12 +314,14 @@ export const universities: University[] = [
   {
     id: 'sangu',
     name: 'ა(ა)იპ - საქართველოს საპატრიარქოს წმიდა ანდრია პირველწოდებულის სახელობის ქართული უნივერსიტეტი',
-    logo: 'https://picsum.photos/seed/sangu/200/200',
+    code: '145',
+    logo: 'https://sangu.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ჭავჭავაძის გამზ. 53ა',
     phone: '+995 32 2 25 24 29',
     website: 'www.sangu.edu.ge',
+    programCount: 8,
     priceRange: '2250 - 3500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -296,12 +332,14 @@ export const universities: University[] = [
   {
     id: 'ssu',
     name: 'შპს - საქართველოს საავიაციო უნივერსიტეტი',
+    code: '131',
     logo: 'https://ssu.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ქეთევან წამებულის გამზ. 16',
     phone: '+995 32 2 74 61 55',
     website: 'www.ssu.edu.ge',
+    programCount: 8,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -312,12 +350,14 @@ export const universities: University[] = [
   {
     id: 'gruni',
     name: 'შპს - გრიგოლ რობაქიძის სახელობის უნივერსიტეტი',
+    code: '033',
     logo: 'https://gruni.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ბელიაშვილის ქ. 7',
     phone: '+995 32 2 10 52 03',
     website: 'www.gruni.edu.ge',
+    programCount: 12,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -328,12 +368,14 @@ export const universities: University[] = [
   {
     id: 'ibsu',
     name: 'შპს - შავი ზღვის საერთაშორისო უნივერსტიტეტი',
+    code: '064',
     logo: 'https://ibsu.edu.ge/wp-content/uploads/2021/05/logo-ka.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, დავით აღმაშენებლის ხეივანი 13კმ, #2',
     phone: '+995 32 2 59 50 05',
     website: 'www.ibsu.edu.ge',
+    programCount: 28,
     priceRange: '2250 - 5000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -344,12 +386,14 @@ export const universities: University[] = [
   {
     id: 'gau',
     name: 'შპს - ქართულ-ამერიკული უნივერსიტეტი',
+    code: '068',
     logo: 'https://gau.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, მ. ალექსიძის ქ. 10',
     phone: '+995 32 2 20 65 20',
     website: 'www.gau.edu.ge',
+    programCount: 10,
     priceRange: '2250 - 5500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -360,12 +404,14 @@ export const universities: University[] = [
   {
     id: 'sdasu',
     name: 'შპს - საქართველოს დავით აღმაშენებლის სახელობის უნივერსიტეტი',
+    code: '034',
     logo: 'https://picsum.photos/seed/sdasu/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ჭავჭავაძის გამზ. 25',
     phone: '+995 32 2 25 24 29',
     website: 'www.sdasu.edu.ge',
+    programCount: 14,
     priceRange: '2250 - 3500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -376,12 +422,14 @@ export const universities: University[] = [
   {
     id: 'ceu',
     name: 'შპს ევროპის ცენტრალური უნივერსიტეტი',
+    code: '158',
     logo: 'https://picsum.photos/seed/ceu/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.ceu.edu.ge',
+    programCount: 1,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -391,12 +439,14 @@ export const universities: University[] = [
   {
     id: 'gipa',
     name: 'ა(ა)იპ - ჯიპა - საქართველოს საზოგადოებრივ საქმეთა ინსტიტუტი',
+    code: '055',
     logo: 'https://gipa.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, მარი ბროსეს ქ. 2',
     phone: '+995 32 2 49 75 00',
     website: 'www.gipa.ge',
+    programCount: 11,
     priceRange: '2250 - 5500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -407,12 +457,14 @@ export const universities: University[] = [
   {
     id: 'ciu',
     name: 'შპს - კავკასიის საერთაშორისო უნივერსიტეტი',
+    code: '098',
     logo: 'https://ciu.edu.ge/images/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ჩარგლის ქ. 73',
     phone: '+995 32 2 61 12 98',
     website: 'www.ciu.edu.ge',
+    programCount: 13,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -423,12 +475,14 @@ export const universities: University[] = [
   {
     id: 'nvu',
     name: 'ა(ა)იპ - ნიუ ვიჟენ-უნივერსიტეტი',
+    code: '164',
     logo: 'https://newvision.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ნოდარ ბოხუას ქ. 11',
     phone: '+995 32 2 48 48 44',
     website: 'www.newvision.ge',
+    programCount: 10,
     priceRange: '2250 - 5000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -439,12 +493,14 @@ export const universities: University[] = [
   {
     id: 'btu',
     name: 'შპს ბიზნესისა და ტექნოლოგიების უნივერსიტეტი',
+    code: '195',
     logo: 'https://btu.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ჭავჭავაძის გამზ. 82',
     phone: '+995 32 2 19 50 15',
     website: 'www.btu.edu.ge',
+    programCount: 6,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -455,12 +511,14 @@ export const universities: University[] = [
   {
     id: 'sjsu',
     name: 'სსიპ - სამცხე-ჯავახეთის სახელმწიფო უნივერსიტეტი',
+    code: '014',
     logo: 'https://sjuni.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'ახალციხე',
     address: 'ახალციხე, რუსთაველის ქ. 106',
     phone: '+995 365 22 19 90',
     website: 'www.sjuni.edu.ge',
+    programCount: 22,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -470,12 +528,14 @@ export const universities: University[] = [
   {
     id: 'eeu',
     name: 'შპს აღმოსავლეთ ევროპის უნივერსიტეტი',
+    code: '172',
     logo: 'https://eeu.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ენუქიძის ქ. 6',
     phone: '+995 32 2 48 48 44',
     website: 'www.eeu.edu.ge',
+    programCount: 7,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -485,12 +545,14 @@ export const universities: University[] = [
   {
     id: 'kiu',
     name: 'სსიპ - ქუთაისის საერთაშორისო უნივერსიტეტი',
+    code: '197',
     logo: 'https://kiu.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'ქუთაისი',
     address: 'ქუთაისი, ახალგაზრდობის გამზ. 5-ე შესახვევი',
     phone: '+995 431 24 21 55',
     website: 'www.kiu.edu.ge',
+    programCount: 4,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -501,12 +563,14 @@ export const universities: University[] = [
   {
     id: 'sabauni',
     name: 'შპს - სულხან-საბა ორბელიანის უნივერსიტეტი',
+    code: '088',
     logo: 'https://sabauni.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, კ. ქუთათელაძის ქ. 3',
     phone: '+995 32 2 42 22 42',
     website: 'www.sabauni.edu.ge',
+    programCount: 10,
     priceRange: '2250 - 3500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -516,12 +580,14 @@ export const universities: University[] = [
   {
     id: 'gorsu',
     name: 'სსიპ- გორის სახელმწიფო უნივერსიტეტი',
+    code: '133',
     logo: 'https://gu.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'გორი',
     address: 'გორი, ი. ჭავჭავაძის გამზ. 53',
     phone: '+995 370 27 24 01',
     website: 'www.gu.edu.ge',
+    programCount: 16,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -531,12 +597,14 @@ export const universities: University[] = [
   {
     id: 'seu_new',
     name: 'შპს საქართველოს ეროვნული უნივერსიტეტი სეუ',
+    code: '152',
     logo: 'https://www.seu.edu.ge/static/img/logo_ka.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, წინანდლის ქ. #9',
     phone: '+995 32 2 90 00 00',
     website: 'www.seu.edu.ge',
+    programCount: 16,
     priceRange: '2250 - 4990 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -547,12 +615,14 @@ export const universities: University[] = [
   {
     id: 'alte',
     name: 'შპს - ალტე უნივერსიტეტი',
+    code: '085',
     logo: 'https://alte.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, უნივერსიტეტის ქ. 2',
     phone: '+995 32 2 40 29 46',
     website: 'www.alte.edu.ge',
+    programCount: 9,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [
@@ -562,12 +632,14 @@ export const universities: University[] = [
   {
     id: 'tamar_uni',
     name: 'ა(ა)იპ - საქართველოს საპატრიარქოს წმიდა თამარ მეფის სახელობის უნივერსიტეტი',
+    code: '154',
     logo: 'https://picsum.photos/seed/tamar/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.tamaruni.edu.ge',
+    programCount: 5,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ჯანდაცვის ფაკულტეტი' }]
@@ -575,12 +647,14 @@ export const universities: University[] = [
   {
     id: 'meskhia',
     name: 'სსიპ - შოთა მესხიას სახელმწიფო უნივერსიტეტი',
+    code: '097',
     logo: 'https://zssu.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'ზუგდიდი',
     address: 'ზუგდიდი, ჯანაშიას ქ. 14',
     phone: '+995 415 25 00 00',
     website: 'www.zssu.ge',
+    programCount: 15,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ჰუმანიტარულ მეცნიერებათა ფაკულტეტი' }]
@@ -588,12 +662,14 @@ export const universities: University[] = [
   {
     id: 'maritime',
     name: 'სსიპ - სასწავლო უნივერსიტეტი ბათუმის სახელმწიფო საზღვაო აკადემია',
+    code: '053',
     logo: 'https://bsma.edu.ge/img/logo.png',
     type: 'სახელმწიფო',
     city: 'ბათუმი',
     address: 'ბათუმი, რუსთაველის ქ. 53',
     phone: '+995 422 27 48 50',
     website: 'www.bsma.edu.ge',
+    programCount: 12,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'საზღვაო-საინჟინრო ფაკულტეტი' }]
@@ -601,12 +677,14 @@ export const universities: University[] = [
   {
     id: 'batumi_art',
     name: 'სსიპ - ბათუმის ხელოვნების უნივერსიტეტი',
+    code: '130',
     logo: 'https://picsum.photos/seed/bart/200/200',
     type: 'სახელმწიფო',
     city: 'ბათუმი',
     address: 'ბათუმი, ლ. ასათიანის ქ. 27',
     phone: '+995 422 27 38 54',
     website: 'www.batsu.edu.ge',
+    programCount: 13,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ხელოვნების ფაკულტეტი' }]
@@ -614,12 +692,14 @@ export const universities: University[] = [
   {
     id: 'tma',
     name: 'შპს - პეტრე შოთაძის სახელობის თბილისის სამედიცინო აკადემია',
+    code: '040',
     logo: 'https://picsum.photos/seed/tma/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ქეთევან წამებულის გამზ. 51',
     phone: '+995 32 2 91 21 44',
     website: 'www.tma.edu.ge',
+    programCount: 1,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'მედიცინის ფაკულტეტი' }]
@@ -627,12 +707,14 @@ export const universities: University[] = [
   {
     id: 'geomedi',
     name: 'შპს - უნივერსიტეტი ”გეომედი”',
+    code: '129',
     logo: 'https://picsum.photos/seed/geomedi/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, კრწანისის ქ. 3',
     phone: '+995 32 2 75 24 59',
     website: 'www.geomedi.edu.ge',
+    programCount: 5,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'სტომატოლოგიის ფაკულტეტი' }]
@@ -640,12 +722,14 @@ export const universities: University[] = [
   {
     id: 'thu',
     name: 'შპს - თბილისის ჰუმანიტარული უნივერსიტეტი',
+    code: '089',
     logo: 'https://picsum.photos/seed/thu/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ბერი გაბრიელ სალოსის გამზ. 31',
     phone: '+995 32 2 74 81 52',
     website: 'www.thu.edu.ge',
+    programCount: 10,
     priceRange: '2250 - 3500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'სამართლის ფაკულტეტი' }]
@@ -653,12 +737,14 @@ export const universities: University[] = [
   {
     id: 'bnu',
     name: 'შპს - ბათუმის ნავიგაციის უნივერსიტეტი',
+    code: '140',
     logo: 'https://picsum.photos/seed/bnu/200/200',
     type: 'კერძო',
     city: 'ბათუმი',
     address: 'ბათუმი, მ. თამარაშვილის ქ. 38',
     phone: '+995 422 24 44 22',
     website: 'www.bntu.edu.ge',
+    programCount: 4,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'საზღვაო-საინჟინრო ფაკულტეტი' }]
@@ -666,12 +752,14 @@ export const universities: University[] = [
   {
     id: 'abuserisdze',
     name: 'ა(ა)იპ საქართველოს საპატრიარქოს წმინდა ტბელ აბუსერისძის სახელობის სასწავლო უნივერსიტეტი',
+    code: '142',
     logo: 'https://picsum.photos/seed/tbel/200/200',
     type: 'კერძო',
     city: 'ხულო',
     address: 'ხულო, ტბელ აბუსერისძის ქ. 1',
     phone: '+995 32 2 XX XX XX',
     website: 'www.tbel.edu.ge',
+    programCount: 9,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ჰუმანიტარულ მეცნიერებათა ფაკულტეტი' }]
@@ -679,12 +767,14 @@ export const universities: University[] = [
   {
     id: 'giu',
     name: 'შპს - საქართველოს საერთაშორისო უნივერსიტეტი ჯიუ',
+    code: '143',
     logo: 'https://picsum.photos/seed/giu/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.giu.edu.ge',
+    programCount: 6,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ბიზნესის ადმინისტრირება' }]
@@ -692,12 +782,14 @@ export const universities: University[] = [
   {
     id: 'eu',
     name: 'შპს - ევროპის უნივერსიტეტი',
+    code: '171',
     logo: 'https://eu.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, გურამიშვილის გამზ. 76',
     phone: '+995 32 2 00 01 71',
     website: 'www.eu.edu.ge',
+    programCount: 7,
     priceRange: '2250 - 4500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'მედიცინის ფაკულტეტი' }]
@@ -705,12 +797,14 @@ export const universities: University[] = [
   {
     id: 'nda',
     name: 'სსიპ - დავით აღმაშენებლის სახელობის საქართველოს ეროვნული თავდაცვის აკადემია',
+    code: '155',
     logo: 'https://picsum.photos/seed/nda/200/200',
     type: 'სახელმწიფო',
     city: 'გორი',
     address: 'გორი, ცხინვალის გზატკეცილი 3კმ',
     phone: '+995 32 2 30 52 85',
     website: 'www.eta.edu.ge',
+    programCount: 10,
     priceRange: 'უფასო',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'მენეჯმენტის ფაკულტეტი' }]
@@ -718,12 +812,14 @@ export const universities: University[] = [
   {
     id: 'sport_uni',
     name: 'სსიპ - საქართველოს სპორტის სახელმწიფო უნივერსიტეტი',
+    code: '186',
     logo: 'https://picsum.photos/seed/sport/200/200',
     type: 'სახელმწიფო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ჭავჭავაძის გამზ. 49',
     phone: '+995 32 2 23 23 49',
     website: 'www.sportuni.ge',
+    programCount: 5,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ფიზიკური აღზრდისა და სპორტის ფაკულტეტი' }]
@@ -731,12 +827,14 @@ export const universities: University[] = [
   {
     id: 'bau',
     name: 'შპს ბაუ ინთერნეიშენალ უნივერსითი, ბათუმი',
+    code: '192',
     logo: 'https://bauinternational.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'ბათუმი',
     address: 'ბათუმი, ფრიდონ ხალვაშის გამზ. 237',
     phone: '+995 422 21 25 35',
     website: 'www.bauinternational.edu.ge',
+    programCount: 2,
     priceRange: '2250 - 6000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'მედიცინის ფაკულტეტი' }]
@@ -744,12 +842,14 @@ export const universities: University[] = [
   {
     id: 'alterbridge',
     name: 'შპს მართვისა და კომუნიკაციის საერთაშორისო სასწავლო უნივერსიტეტი ალტერბრიჯი',
+    code: '198',
     logo: 'https://alterbridge.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ბაგები, წყნეთის გზატკეცილი 1',
     phone: '+995 32 2 XX XX XX',
     website: 'www.alterbridge.edu.ge',
+    programCount: 2,
     priceRange: '2250 - 3500 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'საზოგადოებასთან ურთიერთობა' }]
@@ -757,12 +857,14 @@ export const universities: University[] = [
   {
     id: 'ewu',
     name: 'შპს აღმოსავლეთ-დასავლეთ უნივერსიტეტი',
+    code: '201',
     logo: 'https://picsum.photos/seed/ewu/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ე. მინდელის ქ. 9',
     phone: '+995 32 2 30 11 17',
     website: 'www.ewu.edu.ge',
+    programCount: 1,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ბიზნესის ადმინისტრირება' }]
@@ -770,12 +872,14 @@ export const universities: University[] = [
   {
     id: 'british_uni',
     name: 'შპს - „ბრიტანული უნივერსიტეტი“',
+    code: '199',
     logo: 'https://britishuni.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.britishuni.edu.ge',
+    programCount: 3,
     priceRange: '2250 - 5000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ბიზნესის მართვა' }]
@@ -783,12 +887,14 @@ export const universities: University[] = [
   {
     id: 'ken_walker',
     name: 'შპს კენ ვოლკერის საერთაშორისო უნივერსიტეტი',
+    code: '203',
     logo: 'https://kwu.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.kwu.edu.ge',
+    programCount: 2,
     priceRange: '2250 - 5000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'მედიცინა' }]
@@ -796,12 +902,14 @@ export const universities: University[] = [
   {
     id: 'webster',
     name: 'უცხოური საწარმოს ფილიალი - "ვებსტერ უნივერსიტეტი, ინკ. - ის ფილიალი საქართველოში',
+    code: '202',
     logo: 'https://webster.edu.ge/img/logo.png',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, ი. ჭავჭავაძის გამზ. 82',
     phone: '+995 32 2 XX XX XX',
     website: 'www.webster.edu.ge',
+    programCount: 4,
     priceRange: '2250 - 7000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ბიზნესის ადმინისტრირება' }]
@@ -809,12 +917,14 @@ export const universities: University[] = [
   {
     id: 'avicenna',
     name: 'შპს ავიცენა - ბათუმის სამედიცინო უნივერსიტეტი',
+    code: '205',
     logo: 'https://picsum.photos/seed/avicenna/200/200',
     type: 'კერძო',
     city: 'ბათუმი',
     address: 'ბათუმი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.avicenna.edu.ge',
+    programCount: 1,
     priceRange: '2250 - 5000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'მედიცინა' }]
@@ -822,12 +932,14 @@ export const universities: University[] = [
   {
     id: 'galoba',
     name: 'ა(ა)იპ - გიორგი მთაწმინდელის სახელობის გალობის უნივერსიტეტი',
+    code: '177',
     logo: 'https://picsum.photos/seed/galoba/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.galoba.edu.ge',
+    programCount: 1,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'საეკლესიო მუსიკა' }]
@@ -835,12 +947,14 @@ export const universities: University[] = [
   {
     id: 'aiu',
     name: 'შპს თბილისის საერთაშორისო უნივერსიტეტი აიიუთ',
+    code: '206',
     logo: 'https://picsum.photos/seed/aiu/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.aiu.edu.ge',
+    programCount: 4,
     priceRange: '2250 - 4000 ₾',
     category: 'უნივერსიტეტი',
     faculties: [{ id: '1', name: 'ბიზნესის ადმინისტრირება' }]
@@ -848,12 +962,14 @@ export const universities: University[] = [
   {
     id: 'newuni',
     name: 'შპს ახალი უმაღლესი სასწავლებელი - ნიუუნი',
+    code: '181',
     logo: 'https://picsum.photos/seed/newuni/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.newuni.edu.ge',
+    programCount: 3,
     priceRange: '2250 - 3000 ₾',
     category: 'კოლეჯი',
     faculties: [
@@ -863,12 +979,14 @@ export const universities: University[] = [
   {
     id: 'theology_academy',
     name: 'ა(ა)იპ - საქართველოს სამოციქულო ავტოკეფალური მართლმადიდებელი ეკლესიის თბილისის სასულიერო აკადემია და სემინარია',
+    code: '175',
     logo: 'https://picsum.photos/seed/church/200/200',
     type: 'კერძო',
     city: 'თბილისი',
     address: 'თბილისი, სიონის ქ. 13/40',
     phone: '+995 32 2 98 91 14',
     website: 'www.tsas.ge',
+    programCount: 4,
     priceRange: 'უფასო',
     category: 'მართლმადიდებლური',
     faculties: [
@@ -879,12 +997,14 @@ export const universities: University[] = [
   {
     id: 'new_georgia',
     name: 'ა(ა)იპ ახალი საქართველოს უნივერსიტეტი',
+    code: '189',
     logo: 'https://picsum.photos/seed/ngu/200/200',
     type: 'კერძო',
     city: 'ფოთი',
     address: 'ფოთი, 9 აპრილის ხეივანი 15',
     phone: '+995 493 22 00 00',
     website: 'www.ngu.edu.ge',
+    programCount: 1,
     priceRange: '2250 ₾',
     category: 'მართლმადიდებლური',
     faculties: [
@@ -894,12 +1014,14 @@ export const universities: University[] = [
   {
     id: 'gelati_academy',
     name: 'ა(ა)იპ - მართლმადიდებლური საღვთისმეტყველო უმაღლესი საგანმანათლებლო დაწესებულება - საქართველოს სამოციქულო ავტოკეფალური მართლმადიდებელი ეკლესიის გელათის სასულიერო აკადემია და სემინარია',
+    code: '174',
     logo: 'https://picsum.photos/seed/gelati/200/200',
     type: 'კერძო',
     city: 'ქუთაისი',
     address: 'ქუთაისი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.gelati.edu.ge',
+    programCount: 1,
     priceRange: 'უფასო',
     category: 'მართლმადიდებლური',
     faculties: [
@@ -909,12 +1031,14 @@ export const universities: University[] = [
   {
     id: 'gremi_seminary',
     name: 'საქართველოს საპატრიარქო გრემის სასულიერო სემინარია',
+    code: '173',
     logo: 'https://picsum.photos/seed/gremi/200/200',
     type: 'კერძო',
     city: 'ყვარელი',
     address: 'ყვარელი, გრემი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.gremi.edu.ge',
+    programCount: 1,
     priceRange: 'უფასო',
     category: 'მართლმადიდებლური',
     faculties: [
@@ -924,12 +1048,14 @@ export const universities: University[] = [
   {
     id: 'batumi_seminary',
     name: 'ა(ა)იპ - საქართველოს საპატრიარქოს წმიდა იოანე ღვთისმეტყველის სახელობის ბათუმის სასულიერო სემინარია',
+    code: '184',
     logo: 'https://picsum.photos/seed/batumi_sem/200/200',
     type: 'კერძო',
     city: 'ბათუმი',
     address: 'ბათუმი',
     phone: '+995 32 2 XX XX XX',
     website: 'www.batumiseminaria.ge',
+    programCount: 1,
     priceRange: 'უფასო',
     category: 'მართლმადიდებლური',
     faculties: [
@@ -939,12 +1065,14 @@ export const universities: University[] = [
   {
     id: 'akhaltsikhe_seminary',
     name: 'ა(ა)იპ - საქართველოს საპატრიარქოს ახალციხის წმინდა გრიგოლ ხანძთელის სახელობის სასულიერო სემინარია',
+    code: '194',
     logo: 'https://picsum.photos/seed/akhaltsikhe_sem/200/200',
     type: 'კერძო',
     city: 'ახალციხე',
     address: 'ახალციხე',
     phone: '+995 32 2 XX XX XX',
     website: 'www.akhaltsikhe.edu.ge',
+    programCount: 1,
     priceRange: 'უფასო',
     category: 'მართლმადიდებლური',
     faculties: [
