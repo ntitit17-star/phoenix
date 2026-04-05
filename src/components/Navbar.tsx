@@ -29,12 +29,12 @@ export const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-3 group cursor-pointer">
+        <a href="#home" className="flex items-center gap-3 group cursor-pointer">
           <PhoenixLogo className="w-10 h-10" />
           <span className="text-2xl font-display font-bold tracking-tighter text-white group-hover:text-phoenix-orange transition-colors">
             PHOENIX
           </span>
-        </div>
+        </a>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">

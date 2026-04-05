@@ -6,7 +6,7 @@ import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { PhoenixLogo } from './components/Logo';
 import { motion } from 'motion/react';
-import { BookOpen, Users, Trophy, Rocket, Languages, Globe, Calculator, History, Users2 } from 'lucide-react';
+import { BookOpen, Users, Trophy, Rocket, Languages, Globe, Calculator, History, Users2, Lightbulb, ShieldCheck, Target } from 'lucide-react';
 
 const stats = [
   { label: 'წარმატებული სტუდენტი', value: '5000+', icon: Users, color: 'text-phoenix-cyan' },
@@ -101,9 +101,18 @@ export default function App() {
                     </p>
                   </div>
                   <div className="mt-10 flex flex-wrap gap-4">
-                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">ინოვაცია</div>
-                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">ხარისხი</div>
-                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">შედეგი</div>
+                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold flex items-center gap-2 group hover:bg-phoenix-cyan/10 hover:border-phoenix-cyan/30 transition-all">
+                      <Lightbulb className="w-4 h-4 text-phoenix-cyan" />
+                      ინოვაცია
+                    </div>
+                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold flex items-center gap-2 group hover:bg-phoenix-orange/10 hover:border-phoenix-orange/30 transition-all">
+                      <ShieldCheck className="w-4 h-4 text-phoenix-orange" />
+                      ხარისხი
+                    </div>
+                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold flex items-center gap-2 group hover:bg-phoenix-magenta/10 hover:border-phoenix-magenta/30 transition-all">
+                      <Target className="w-4 h-4 text-phoenix-magenta" />
+                      შედეგი
+                    </div>
                   </div>
                 </div>
                 <div className="relative">
