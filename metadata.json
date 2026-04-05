@@ -1,0 +1,7 @@
+{
+  "name": "PHOENIX Prep Center",
+  "description": "A cyber-luminous educational platform for students, featuring a mythological phoenix aesthetic and advanced prep tools.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
