@@ -1,6 +1,7 @@
 import React from 'react';
 import { PhoenixLogo } from './Logo';
 import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
@@ -33,18 +34,18 @@ export const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6">ნავიგაცია</h4>
             <ul className="space-y-4 text-sm text-white/40">
-              <li><a href="#" className="hover:text-phoenix-cyan transition-colors">უნივერსიტეტები</a></li>
-              <li><a href="#" className="hover:text-phoenix-cyan transition-colors">სიახლეები</a></li>
-              <li><a href="#" className="hover:text-phoenix-cyan transition-colors">ბლოგი</a></li>
-              <li><a href="#" className="hover:text-phoenix-cyan transition-colors">აბიტურიენტებისთვის</a></li>
+              <li><Link to="/universities" className="hover:text-phoenix-cyan transition-colors">უნივერსიტეტები</Link></li>
+              <li><Link to="/#news" className="hover:text-phoenix-cyan transition-colors">სიახლეები</Link></li>
+              <li><Link to="/#blog" className="hover:text-phoenix-cyan transition-colors">ბლოგი</Link></li>
+              <li><Link to="/#entrants" className="hover:text-phoenix-cyan transition-colors">აბიტურიენტებისთვის</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-white font-bold mb-6">ცენტრი</h4>
             <ul className="space-y-4 text-sm text-white/40">
-              <li><a href="#" className="hover:text-phoenix-cyan transition-colors">ჩვენ შესახებ</a></li>
-              <li><a href="#" className="hover:text-phoenix-cyan transition-colors">კონტაქტი</a></li>
+              <li><Link to="/#about" className="hover:text-phoenix-cyan transition-colors">ჩვენ შესახებ</Link></li>
+              <li><Link to="/#contact" className="hover:text-phoenix-cyan transition-colors">კონტაქტი</Link></li>
               <li><a href="#" className="hover:text-phoenix-cyan transition-colors">ვაკანსიები</a></li>
               <li><a href="#" className="hover:text-phoenix-cyan transition-colors">წესები და პირობები</a></li>
             </ul>
