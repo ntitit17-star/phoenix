@@ -72,8 +72,27 @@ export default function App() {
           </div>
         </section>
 
-        <MapsPlaceholder />
-        <ContactForm />
+        {/* Location & Contact Section */}
+        <section id="contact" className="py-24 relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-display font-bold mb-2">ჩვენი ლოკაცია</h2>
+                  <p className="text-white/50 text-sm">გვეწვიეთ თბილისის ყველაზე ტექნოლოგიურ ცენტრში</p>
+                </div>
+                <MapsPlaceholder />
+              </div>
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-display font-bold mb-2">დაგვიკავშირდით</h2>
+                  <p className="text-white/50 text-sm">გაქვთ კითხვები? ჩვენი გუნდი მზად არის დაგეხმაროთ</p>
+                </div>
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />
