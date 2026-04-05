@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, MapPin, Phone, Globe, GraduationCap, 
   ArrowLeft, Bookmark, X, ChevronRight,
-  ExternalLink, Database, Loader2
+  ExternalLink, Database, Loader2, Filter, ChevronDown
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { universities as localUniversities, University } from '../data/universities';
@@ -71,6 +71,23 @@ export const UniversitiesPage: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSeeding, setIsSeeding] = useState(false);
 
+  // Advanced Filters State
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedSector, setSelectedSector] = useState<string>('ყველა');
+  const [selectedCity, setSelectedCity] = useState<string>('ყველა');
+  const [selectedFaculty, setSelectedFaculty] = useState<string>('ყველა');
+
+  // Extract unique cities and faculties for dropdowns
+  const cities = React.useMemo(() => {
+    const allCities = universities.map(u => u.city).filter(Boolean);
+    return ['ყველა', ...Array.from(new Set(allCities))].sort();
+  }, [universities]);
+
+  const allFaculties = React.useMemo(() => {
+    const facultyNames = universities.flatMap(u => u.faculties.map(f => f.name));
+    return ['ყველა', ...Array.from(new Set(facultyNames))].sort();
+  }, [universities]);
+
   useEffect(() => {
     // Test connection
     const testConnection = async () => {
@@ -133,7 +150,11 @@ export const UniversitiesPage: React.FC = () => {
   const filteredUnis = universities.filter(uni => {
     const matchesSearch = uni.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = activeCategory === 'ყველა' || uni.category === activeCategory;
-    return matchesSearch && matchesCategory;
+    const matchesSector = selectedSector === 'ყველა' || uni.type === selectedSector;
+    const matchesCity = selectedCity === 'ყველა' || uni.city === selectedCity;
+    const matchesFaculty = selectedFaculty === 'ყველა' || uni.faculties.some(f => f.name === selectedFaculty);
+    
+    return matchesSearch && matchesCategory && matchesSector && matchesCity && matchesFaculty;
   });
 
   return (
@@ -215,22 +236,102 @@ export const UniversitiesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap gap-3 mb-12">
-          {(['ყველა', 'უნივერსიტეტი', 'კოლეჯი', 'მართლმადიდებლური'] as const).map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all ${
-                activeCategory === cat 
-                  ? 'bg-phoenix-cyan text-phoenix-navy shadow-lg shadow-phoenix-cyan/20' 
-                  : 'glass border-white/5 text-white/40 hover:text-white hover:border-white/20'
-              }`}
-            >
-              {cat === 'ყველა' ? 'ყველა' : cat === 'მართლმადიდებლური' ? 'მართლმადიდებლური' : cat + 'ები'}
-            </button>
-          ))}
+        {/* Category Tabs & Filter Toggle */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+          <div className="flex flex-wrap gap-3">
+            {(['ყველა', 'უნივერსიტეტი', 'კოლეჯი', 'მართლმადიდებლური'] as const).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all ${
+                  activeCategory === cat 
+                    ? 'bg-phoenix-cyan text-phoenix-navy shadow-lg shadow-phoenix-cyan/20' 
+                    : 'glass border-white/5 text-white/40 hover:text-white hover:border-white/20'
+                }`}
+              >
+                {cat === 'ყველა' ? 'ყველა' : cat === 'მართლმადიდებლური' ? 'მართლმადიდებლური' : cat + 'ები'}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-sm font-bold transition-all border ${
+              showFilters 
+                ? 'bg-white/10 border-phoenix-cyan text-phoenix-cyan' 
+                : 'glass border-white/5 text-white/60 hover:text-white hover:border-white/20'
+            }`}
+          >
+            <Filter className="w-4 h-4" />
+            დეტალური ძებნა
+            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showFilters ? 'rotate-180' : ''}`} />
+          </button>
         </div>
+
+        {/* Advanced Filters Panel */}
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div
+              initial={{ height: 0, opacity: 0, marginBottom: 0 }}
+              animate={{ height: 'auto', opacity: 1, marginBottom: 48 }}
+              exit={{ height: 0, opacity: 0, marginBottom: 0 }}
+              className="overflow-hidden"
+            >
+              <div className="glass p-8 rounded-[32px] border-white/10 grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Sector Filter */}
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-white/40 ml-1">სექტორი</label>
+                  <div className="relative">
+                    <select
+                      value={selectedSector}
+                      onChange={(e) => setSelectedSector(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer"
+                    >
+                      <option value="ყველა">ყველა სექტორი</option>
+                      <option value="სახელმწიფო">სახელმწიფო</option>
+                      <option value="კერძო">კერძო</option>
+                    </select>
+                    <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* City Filter */}
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-white/40 ml-1">ქალაქი</label>
+                  <div className="relative">
+                    <select
+                      value={selectedCity}
+                      onChange={(e) => setSelectedCity(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer"
+                    >
+                      {cities.map(city => (
+                        <option key={city} value={city}>{city === 'ყველა' ? 'ყველა ქალაქი' : city}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* Faculty Filter */}
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-white/40 ml-1">ფაკულტეტი</label>
+                  <div className="relative">
+                    <select
+                      value={selectedFaculty}
+                      onChange={(e) => setSelectedFaculty(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer"
+                    >
+                      {allFaculties.map(faculty => (
+                        <option key={faculty} value={faculty}>{faculty === 'ყველა' ? 'ყველა ფაკულტეტი' : faculty}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Universities Grid */}
         {loading ? (
