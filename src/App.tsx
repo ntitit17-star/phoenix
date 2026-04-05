@@ -6,13 +6,26 @@ import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { PhoenixLogo } from './components/Logo';
 import { motion } from 'motion/react';
-import { BookOpen, Users, Trophy, Rocket, Languages, Globe, Calculator, History, Users2, Lightbulb, ShieldCheck, Target } from 'lucide-react';
+import { BookOpen, Users, Trophy, Rocket, Languages, Globe, Calculator, History, Users2, Lightbulb, ShieldCheck, Target, GraduationCap, Briefcase, ClipboardCheck } from 'lucide-react';
 
 const stats = [
-  { label: 'წარმატებული სტუდენტი', value: '5000+', icon: Users, color: 'text-phoenix-cyan' },
-  { label: 'პროფესიონალი ლექტორი', value: '120+', icon: BookOpen, color: 'text-phoenix-orange' },
+  { label: 'წარმატებული მოსწავლე', value: '5000+', icon: Users, color: 'text-phoenix-cyan' },
+  { label: 'პროფესიონალი მასწავლებელი', value: '120+', icon: BookOpen, color: 'text-phoenix-orange' },
   { label: 'საუკეთესო შედეგები', value: '98%', icon: Trophy, color: 'text-phoenix-magenta' },
   { label: 'ინოვაციური მეთოდები', value: '100%', icon: Rocket, color: 'text-phoenix-yellow' },
+];
+
+const NaecLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M48 5 L95 85 H78 L40 5 H48Z" fill="#e31e24" />
+    <path d="M5 85 L40 25 L50 42 L22 85 H68 L62 75 H22 L5 85 Z" fill="#0067b1" />
+  </svg>
+);
+
+const categories = [
+  { name: 'უნივერსიტეტები', icon: GraduationCap, color: 'text-phoenix-cyan' },
+  { name: 'პროფესიული განათლება', icon: Briefcase, color: 'text-phoenix-orange' },
+  { name: 'ერთიანი ეროვნული გამოცდები', icon: NaecLogo, color: '' },
 ];
 
 const subjects = [
@@ -47,6 +60,31 @@ export default function App() {
                   <stat.icon className={`w-8 h-8 mx-auto mb-4 ${stat.color} group-hover:scale-110 transition-transform`} />
                   <div className="text-3xl font-display font-black mb-1">{stat.value}</div>
                   <div className="text-xs font-bold uppercase tracking-widest text-white/40">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Education Categories Section */}
+        <section className="py-12 relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {categories.map((cat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="glass p-10 rounded-[32px] border-white/5 text-center flex flex-col items-center gap-6 group cursor-pointer hover:border-white/20 transition-all"
+                >
+                  <div className={`w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center ${cat.color} group-hover:scale-110 transition-transform duration-500`}>
+                    <cat.icon className="w-10 h-10" />
+                  </div>
+                  <h3 className="text-xl font-display font-bold tracking-tight">{cat.name}</h3>
+                  <div className="w-12 h-1 bg-white/10 rounded-full group-hover:w-24 group-hover:bg-current transition-all duration-500" />
                 </motion.div>
               ))}
             </div>

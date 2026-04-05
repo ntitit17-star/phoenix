@@ -41,7 +41,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-white font-bold mb-6">კომპანია</h4>
+            <h4 className="text-white font-bold mb-6">ცენტრი</h4>
             <ul className="space-y-4 text-sm text-white/40">
               <li><a href="#" className="hover:text-phoenix-cyan transition-colors">ჩვენ შესახებ</a></li>
               <li><a href="#" className="hover:text-phoenix-cyan transition-colors">კონტაქტი</a></li>
