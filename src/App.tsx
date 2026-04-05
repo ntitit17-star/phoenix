@@ -6,13 +6,21 @@ import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { PhoenixLogo } from './components/Logo';
 import { motion } from 'motion/react';
-import { BookOpen, Users, Trophy, Rocket } from 'lucide-react';
+import { BookOpen, Users, Trophy, Rocket, Languages, Globe, Calculator, History, Users2 } from 'lucide-react';
 
 const stats = [
   { label: 'წარმატებული სტუდენტი', value: '5000+', icon: Users, color: 'text-phoenix-cyan' },
   { label: 'პროფესიონალი ლექტორი', value: '120+', icon: BookOpen, color: 'text-phoenix-orange' },
   { label: 'საუკეთესო შედეგები', value: '98%', icon: Trophy, color: 'text-phoenix-magenta' },
   { label: 'ინოვაციური მეთოდები', value: '100%', icon: Rocket, color: 'text-phoenix-yellow' },
+];
+
+const subjects = [
+  { name: 'ქართული ენა და ლიტერატურა', icon: Languages, color: 'text-phoenix-orange' },
+  { name: 'ინგლისური ენა', icon: Globe, color: 'text-phoenix-cyan' },
+  { name: 'მათემატიკა', icon: Calculator, color: 'text-phoenix-magenta' },
+  { name: 'ისტორია', icon: History, color: 'text-phoenix-yellow' },
+  { name: 'სამოქალაქო განათლება', icon: Users2, color: 'text-phoenix-cyan' },
 ];
 
 export default function App() {
@@ -24,7 +32,7 @@ export default function App() {
         <Hero />
 
         {/* Stats Section */}
-        <section className="py-20 relative z-10">
+        <section className="py-12 relative z-10">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
@@ -45,8 +53,37 @@ export default function App() {
           </div>
         </section>
 
+        {/* Entrants Subjects Section */}
+        <section id="entrants" className="py-16 relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">აბიტურიენტთა მოსამზადებელი საგნები</h2>
+              <div className="w-20 h-1 bg-phoenix-cyan mx-auto rounded-full" />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {subjects.map((subject, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -5, borderColor: 'rgba(255,255,255,0.2)' }}
+                  className="glass p-8 rounded-2xl border-white/5 text-center flex flex-col items-center justify-center gap-4 group transition-all"
+                >
+                  <div className={`p-4 rounded-xl bg-white/5 ${subject.color} group-hover:scale-110 transition-transform`}>
+                    <subject.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-sm font-bold leading-tight">{subject.name}</h3>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* About Us Section */}
-        <section id="about" className="py-24 relative overflow-hidden">
+        <section id="about" className="py-16 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
             <div className="glass p-12 md:p-20 rounded-[40px] border-phoenix-cyan/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-96 h-96 bg-phoenix-magenta/10 blur-[100px] -mr-48 -mt-48" />
@@ -103,9 +140,9 @@ export default function App() {
         </section>
 
         {/* Why PHOENIX Section */}
-        <section id="why-us" className="py-24 relative">
+        <section id="why-us" className="py-16 relative">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-20">
+            <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">რატომ PHOENIX?</h2>
               <div className="w-24 h-1 bg-gradient-to-r from-phoenix-orange to-phoenix-magenta mx-auto rounded-full" />
             </div>
@@ -138,7 +175,7 @@ export default function App() {
         </section>
 
         {/* Location & Contact Section */}
-        <section id="contact" className="py-24 relative">
+        <section id="contact" className="py-16 relative">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div className="flex flex-col">

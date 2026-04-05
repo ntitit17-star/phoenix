@@ -4,7 +4,7 @@ import { PhoenixLogo } from './Logo';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { name: 'უნივერსიტეტები', href: '#universities' },
+  { name: 'აბიტურიენტებისთვის', href: '#entrants' },
   { name: 'ჩვენს შესახებ', href: '#about' },
   { name: 'რატომ PHOENIX?', href: '#why-us' },
   { name: 'სიახლეები', href: '#news' },
