@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { MapsPlaceholder } from './components/MapsPlaceholder';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
+import { PhoenixLogo } from './components/Logo';
 import { motion } from 'motion/react';
 import { BookOpen, Users, Trophy, Rocket } from 'lucide-react';
 
@@ -44,7 +45,64 @@ export default function App() {
           </div>
         </section>
 
-        {/* Why Us Section */}
+        {/* About Us Section */}
+        <section id="about" className="py-24 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="glass p-12 md:p-20 rounded-[40px] border-phoenix-cyan/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-phoenix-magenta/10 blur-[100px] -mr-48 -mt-48" />
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-phoenix-cyan/10 blur-[100px] -ml-48 -mb-48" />
+              
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">ჩვენს შესახებ</h2>
+                  <div className="space-y-6 text-lg text-white/70 leading-relaxed">
+                    <p>
+                      PHOENIX-ის მოსამზადებელი ცენტრი დაარსდა იმ მიზნით, რომ რევოლუცია მოეხდინა საგანმანათლებლო სივრცეში. ჩვენ გვჯერა, რომ თითოეულ მოსწავლეს აქვს უნიკალური პოტენციალი, რომლის გამოსავლენადაც საჭიროა სწორი გარემო და თანამედროვე ხელსაწყოები.
+                    </p>
+                    <p>
+                      ჩვენი ცენტრი აერთიანებს ტრადიციულ ცოდნას და მომავლის ტექნოლოგიებს. ჩვენ არ ვასწავლით მხოლოდ საგნებს, ჩვენ ვასწავლით აზროვნებას, პრობლემების გადაჭრას და მომავლისთვის მზადყოფნას.
+                    </p>
+                  </div>
+                  <div className="mt-10 flex flex-wrap gap-4">
+                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">ინოვაცია</div>
+                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">ხარისხი</div>
+                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">შედეგი</div>
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="aspect-square rounded-3xl overflow-hidden glass border-white/10 relative group">
+                    <img 
+                      src="https://picsum.photos/seed/education/800/800" 
+                      alt="Education" 
+                      className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-phoenix-navy via-transparent to-transparent" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                      <motion.div
+                        animate={{ 
+                          y: [0, -15, 0],
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        <PhoenixLogo className="w-32 h-32" />
+                      </motion.div>
+                      <motion.span 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="text-4xl font-display font-black tracking-tighter text-white text-glow-orange"
+                      >
+                        PHOENIX
+                      </motion.span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why PHOENIX Section */}
         <section id="why-us" className="py-24 relative">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-20">
@@ -79,68 +137,27 @@ export default function App() {
           </div>
         </section>
 
-        {/* About Us Section */}
-        <section id="about" className="py-24 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="glass p-12 md:p-20 rounded-[40px] border-phoenix-cyan/10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-phoenix-magenta/10 blur-[100px] -mr-48 -mt-48" />
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-phoenix-cyan/10 blur-[100px] -ml-48 -mb-48" />
-              
-              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">ჩვენს შესახებ</h2>
-                  <div className="space-y-6 text-lg text-white/70 leading-relaxed">
-                    <p>
-                      PHOENIX-ის მოსამზადებელი ცენტრი დაარსდა იმ მიზნით, რომ რევოლუცია მოეხდინა საგანმანათლებლო სივრცეში. ჩვენ გვჯერა, რომ თითოეულ მოსწავლეს აქვს უნიკალური პოტენციალი, რომლის გამოსავლენადაც საჭიროა სწორი გარემო და თანამედროვე ხელსაწყოები.
-                    </p>
-                    <p>
-                      ჩვენი ცენტრი აერთიანებს ტრადიციულ ცოდნას და მომავლის ტექნოლოგიებს. ჩვენ არ ვასწავლით მხოლოდ საგნებს, ჩვენ ვასწავლით აზროვნებას, პრობლემების გადაჭრას და მომავლისთვის მზადყოფნას.
-                    </p>
-                  </div>
-                  <div className="mt-10 flex flex-wrap gap-4">
-                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">ინოვაცია</div>
-                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">ხარისხი</div>
-                    <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-sm font-bold">შედეგი</div>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div className="aspect-square rounded-3xl overflow-hidden glass border-white/10 relative group">
-                    <img 
-                      src="https://picsum.photos/seed/education/800/800" 
-                      alt="Education" 
-                      className="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-phoenix-navy via-transparent to-transparent" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full bg-phoenix-orange/20 border border-phoenix-orange flex items-center justify-center animate-pulse">
-                        <div className="w-12 h-12 bg-phoenix-orange rounded-full neon-glow-orange" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Location & Contact Section */}
         <section id="contact" className="py-24 relative">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              <div>
-                <div className="mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <div className="flex flex-col">
+                <div className="mb-8 h-16 flex flex-col justify-end">
                   <h2 className="text-3xl font-display font-bold mb-2">ჩვენი ლოკაცია</h2>
                   <p className="text-white/50 text-sm">გვეწვიეთ თბილისის ყველაზე ტექნოლოგიურ ცენტრში</p>
                 </div>
-                <MapsPlaceholder />
+                <div className="flex-grow">
+                  <MapsPlaceholder />
+                </div>
               </div>
-              <div>
-                <div className="mb-8">
+              <div className="flex flex-col">
+                <div className="mb-8 h-16 flex flex-col justify-end">
                   <h2 className="text-3xl font-display font-bold mb-2">დაგვიკავშირდით</h2>
                   <p className="text-white/50 text-sm">გაქვთ კითხვები? ჩვენი გუნდი მზად არის დაგეხმაროთ</p>
                 </div>
-                <ContactForm />
+                <div className="flex-grow">
+                  <ContactForm />
+                </div>
               </div>
             </div>
           </div>

@@ -5,10 +5,10 @@ import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { name: 'უნივერსიტეტები', href: '#universities' },
-  { name: 'რატომ ჩვენ?', href: '#why-us' },
+  { name: 'ჩვენს შესახებ', href: '#about' },
+  { name: 'რატომ PHOENIX?', href: '#why-us' },
   { name: 'სიახლეები', href: '#news' },
   { name: 'ბლოგი', href: '#blog' },
-  { name: 'ჩვენს შესახებ', href: '#about' },
   { name: 'კონტაქტი', href: '#contact' },
 ];
 

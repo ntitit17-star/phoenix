@@ -4,7 +4,7 @@ import { MapPin, Navigation } from 'lucide-react';
 
 export const MapsPlaceholder = () => {
   return (
-    <div className="relative h-[450px] rounded-2xl overflow-hidden glass border-phoenix-cyan/20 group">
+    <div className="relative h-full min-h-[450px] rounded-2xl overflow-hidden glass border-phoenix-cyan/20 group">
       {/* Dark Futuristic Map Background */}
       <div className="absolute inset-0 bg-[#0a192f]">
         {/* Grid overlay */}
