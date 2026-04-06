@@ -19,6 +19,7 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -37,11 +38,15 @@ export const Navbar = () => {
   }, []);
 
   const handleLogin = async () => {
+    setAuthError(null);
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error);
+      setAuthError(error.code || error.message);
+      // Auto-hide error after 5 seconds
+      setTimeout(() => setAuthError(null), 5000);
     }
   };
 
@@ -93,6 +98,20 @@ export const Navbar = () => {
             PHOENIX
           </span>
         </Link>
+
+        {/* Auth Error Message */}
+        <AnimatePresence>
+          {authError && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute top-full left-1/2 -translate-x-1/2 mt-4 px-4 py-2 bg-phoenix-magenta text-white text-xs font-bold rounded-lg shadow-xl z-[60]"
+            >
+              ავტორიზაციის შეცდომა: {authError}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
