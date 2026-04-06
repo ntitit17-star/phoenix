@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Search, MapPin, Phone, Globe, GraduationCap, 
   ArrowLeft, Bookmark, X, ChevronRight,
-  ExternalLink, Database, Loader2, Filter, ChevronDown
+  ExternalLink, Database, Loader2, Filter, ChevronDown,
+  School
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { universities as localUniversities, University } from '../data/universities';
@@ -184,7 +185,7 @@ export const UniversitiesPage: React.FC = () => {
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-phoenix-orange/5 blur-3xl -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700" />
             <h3 className="text-xl font-display font-bold text-phoenix-orange mb-4 flex items-center gap-3">
-              <Bookmark className="w-6 h-6" />
+              <School className="w-6 h-6" />
               კოლეჯი
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
@@ -285,11 +286,11 @@ export const UniversitiesPage: React.FC = () => {
                     <select
                       value={selectedSector}
                       onChange={(e) => setSelectedSector(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer"
+                      className="w-full bg-white/10 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer text-white"
                     >
-                      <option value="ყველა">ყველა სექტორი</option>
-                      <option value="სახელმწიფო">სახელმწიფო</option>
-                      <option value="კერძო">კერძო</option>
+                      <option value="ყველა" className="bg-phoenix-navy text-white">ყველა სექტორი</option>
+                      <option value="სახელმწიფო" className="bg-phoenix-navy text-white">სახელმწიფო</option>
+                      <option value="კერძო" className="bg-phoenix-navy text-white">კერძო</option>
                     </select>
                     <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
                   </div>
@@ -302,10 +303,10 @@ export const UniversitiesPage: React.FC = () => {
                     <select
                       value={selectedCity}
                       onChange={(e) => setSelectedCity(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer"
+                      className="w-full bg-white/10 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer text-white"
                     >
                       {cities.map(city => (
-                        <option key={city} value={city}>{city === 'ყველა' ? 'ყველა ქალაქი' : city}</option>
+                        <option key={city} value={city} className="bg-phoenix-navy text-white">{city === 'ყველა' ? 'ყველა ქალაქი' : city}</option>
                       ))}
                     </select>
                     <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
@@ -319,10 +320,10 @@ export const UniversitiesPage: React.FC = () => {
                     <select
                       value={selectedFaculty}
                       onChange={(e) => setSelectedFaculty(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer"
+                      className="w-full bg-white/10 border border-white/10 rounded-2xl py-4 px-6 text-sm appearance-none focus:outline-none focus:border-phoenix-cyan/50 transition-colors cursor-pointer text-white"
                     >
                       {allFaculties.map(faculty => (
-                        <option key={faculty} value={faculty}>{faculty === 'ყველა' ? 'ყველა ფაკულტეტი' : faculty}</option>
+                        <option key={faculty} value={faculty} className="bg-phoenix-navy text-white">{faculty === 'ყველა' ? 'ყველა ფაკულტეტი' : faculty}</option>
                       ))}
                     </select>
                     <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
