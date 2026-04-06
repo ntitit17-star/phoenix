@@ -41,10 +41,22 @@ export const Navbar = () => {
     setAuthError(null);
     try {
       const provider = new GoogleAuthProvider();
+      // Add custom parameters to ensure account selection
+      provider.setCustomParameters({
+        prompt: 'select_account'
+      });
+      
       await signInWithPopup(auth, provider);
     } catch (error: any) {
       console.error("Login error:", error);
-      setAuthError(error.code || error.message);
+      
+      // If popup is blocked or closed, we can try redirect as a fallback
+      if (error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+        setAuthError("Popup დაიბლოკა. სცადეთ ხელახლა ან გახსენით აპლიკაცია ახალ ტაბში.");
+      } else {
+        setAuthError(error.code || error.message);
+      }
+      
       // Auto-hide error after 5 seconds
       setTimeout(() => setAuthError(null), 5000);
     }
