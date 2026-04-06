@@ -8,9 +8,11 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { universities as localUniversities, University } from '../data/universities';
-import { db, auth } from '../firebase';
-import { collection, onSnapshot, setDoc, doc, getDocFromServer } from 'firebase/firestore';
+import { db, auth, storage } from '../firebase';
+import { collection, onSnapshot, setDoc, doc, getDocFromServer, updateDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { Upload, Check, AlertCircle } from 'lucide-react';
 
 enum OperationType {
   CREATE = 'create',
@@ -71,6 +73,7 @@ export const UniversitiesPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<'ყველა' | 'უნივერსიტეტი' | 'კოლეჯი' | 'მართლმადიდებლური'>('ყველა');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSeeding, setIsSeeding] = useState(false);
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
 
   // Advanced Filters State
   const [showFilters, setShowFilters] = useState(false);
@@ -145,6 +148,27 @@ export const UniversitiesPage: React.FC = () => {
       alert('შეცდომა მონაცემების ატვირთვისას.');
     } finally {
       setIsSeeding(false);
+    }
+  };
+
+  const handleLogoUpload = async (uniId: string, file: File) => {
+    if (!isAdmin) return;
+    setUploadingId(uniId);
+    try {
+      const storageRef = ref(storage, `university-logos/${uniId}-${file.name}`);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      
+      await updateDoc(doc(db, 'universities', uniId), {
+        logo: downloadURL
+      });
+      
+      alert('ლოგო წარმატებით განახლდა!');
+    } catch (error) {
+      console.error('Error uploading logo:', error);
+      alert('შეცდომა ლოგოს ატვირთვისას. დარწმუნდით, რომ Firebase Storage წესები სწორად არის კონფიგურირებული.');
+    } finally {
+      setUploadingId(null);
     }
   };
 
@@ -356,13 +380,35 @@ export const UniversitiesPage: React.FC = () => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-phoenix-cyan/5 to-transparent blur-3xl" />
                 
                 {/* Logo Section */}
-                <div className="w-full sm:w-32 h-32 rounded-2xl bg-white p-4 flex-shrink-0 flex items-center justify-center relative z-10 shadow-2xl shadow-black/20">
+                <div className="w-full sm:w-32 h-32 rounded-2xl bg-white p-4 flex-shrink-0 flex items-center justify-center relative z-10 shadow-2xl shadow-black/20 group/logo">
                   <img 
                     src={uni.logo} 
                     alt={uni.name} 
                     className="w-full h-full object-contain" 
                     referrerPolicy="no-referrer" 
                   />
+                  
+                  {isAdmin && (
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/logo:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
+                      <label className="cursor-pointer p-2 hover:scale-110 transition-transform">
+                        {uploadingId === uni.id ? (
+                          <Loader2 className="w-6 h-6 text-white animate-spin" />
+                        ) : (
+                          <Upload className="w-6 h-6 text-white" />
+                        )}
+                        <input 
+                          type="file" 
+                          className="hidden" 
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) handleLogoUpload(uni.id, file);
+                          }}
+                          disabled={uploadingId === uni.id}
+                        />
+                      </label>
+                    </div>
+                  )}
                 </div>
 
                 {/* Content Section */}
