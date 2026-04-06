@@ -38,17 +38,17 @@ service cloud.firestore {
     }
 
     function isValidUniversity(data) {
-      return data.id is string && data.id.size() > 0 &&
+      return data.id is string && data.id.size() > 0 && data.id.size() < 100 &&
              data.name is string && data.name.size() > 0 && data.name.size() < 500 &&
-             data.logo is string && data.logo.size() > 0 &&
+             data.logo is string && data.logo.size() > 0 && data.logo.size() < 2000 &&
              data.type in ['კერძო', 'სახელმწიფო'] &&
-             data.city is string && data.city.size() > 0 &&
-             data.address is string && data.address.size() > 0 &&
-             data.phone is string && data.phone.size() > 0 &&
-             data.website is string && data.website.size() > 0 &&
-             data.priceRange is string && data.priceRange.size() > 0 &&
+             data.city is string && data.city.size() > 0 && data.city.size() < 100 &&
+             data.address is string && data.address.size() > 0 && data.address.size() < 500 &&
+             data.phone is string && data.phone.size() > 0 && data.phone.size() < 50 &&
+             data.website is string && data.website.size() > 0 && data.website.size() < 1000 &&
+             data.priceRange is string && data.priceRange.size() > 0 && data.priceRange.size() < 100 &&
              data.category in ['უნივერსიტეტი', 'კოლეჯი', 'მართლმადიდებლური'] &&
-             data.faculties is list;
+             data.faculties is list && data.faculties.size() < 100;
     }
 
     function isAdmin() {

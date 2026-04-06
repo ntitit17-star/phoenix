@@ -1,0 +1,23 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email == "ntitit17@gmail.com" && 
+             request.auth.token.email_verified == true;
+    }
+
+    match /university-logos/{logoId} {
+      // Allow everyone to read logos
+      allow read: if true;
+      
+      // Only admins can upload or delete logos
+      // Enforce file size (max 5MB) and content type (images only)
+      allow write: if isAdmin() && 
+                   request.resource.size < 5 * 1024 * 1024 &&
+                   request.resource.contentType.matches('image/.*');
+    }
+  }
+}
