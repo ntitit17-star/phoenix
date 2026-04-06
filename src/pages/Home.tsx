@@ -2,6 +2,7 @@ import React from 'react';
 import { Hero } from '../components/Hero';
 import { MapsPlaceholder } from '../components/MapsPlaceholder';
 import { ContactForm } from '../components/ContactForm';
+import { PhoenixLogo } from '../components/Logo';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -172,11 +173,7 @@ export const Home = () => {
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     >
                       <div className="w-32 h-32 flex items-center justify-center">
-                        <svg viewBox="0 0 100 100" className="w-full h-full">
-                          <path d="M50 5 L95 25 L95 75 L50 95 L5 75 L5 25 Z" fill="none" stroke="currentColor" strokeWidth="2" className="text-phoenix-orange" />
-                          <path d="M50 25 L80 40 L80 60 L50 75 L20 60 L20 40 Z" fill="currentColor" className="text-phoenix-magenta opacity-50" />
-                          <circle cx="50" cy="50" r="10" fill="currentColor" className="text-phoenix-cyan" />
-                        </svg>
+                        <PhoenixLogo className="w-full h-full" />
                       </div>
                     </motion.div>
                     <motion.span 
@@ -204,9 +201,9 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: 'ინდივიდუალური მიდგომა', desc: 'თითოეული სტუდენტის საჭიროებებზე მორგებული სასწავლო გეგმა და მუდმივი მონიტორინგი.' },
+              { title: 'ინდივიდუალური მიდგომა', desc: 'თითოეული მოსწავლის საჭიროებებზე მორგებული სასწავლო გეგმა და მუდმივი მონიტორინგი.' },
               { title: 'თანამედროვე პლატფორმა', desc: 'ონლაინ რესურსები, ტესტები და ვიდეო გაკვეთილები 24/7 ხელმისაწვდომობით ნებისმიერი მოწყობილობიდან.' },
-              { title: 'გარანტირებული შედეგი', desc: 'ჩვენი სტუდენტების 98% წარმატებით აბარებს სასურველ ფაკულტეტზე მაღალი გრანტით.' },
+              { title: 'გარანტირებული შედეგი', desc: 'ჩვენი მოსწავლეების 98% წარმატებით აბარებს სასურველ ფაკულტეტზე მაღალი გრანტით.' },
               { title: 'გამოცდილი მენტორები', desc: 'საუკეთესო სპეციალისტები, რომლებიც დაგეხმარებიან რთული მასალის მარტივად ათვისებაში.' },
               { title: 'ინოვაციური მეთოდები', desc: 'სწავლების უახლესი ტექნოლოგიები, რომლებიც პროცესს უფრო საინტერესოს და ეფექტურს ხდის.' },
               { title: 'მუდმივი მხარდაჭერა', desc: 'ჩვენი გუნდი მზად არის გიპასუხოთ ნებისმიერ კითხვაზე სასწავლო პროცესის განმავლობაში.' }

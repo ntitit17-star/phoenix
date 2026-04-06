@@ -758,7 +758,7 @@ export const universities: University[] = [
     city: 'ხულო',
     address: 'ხულო, ტბელ აბუსერისძის ქ. 1',
     phone: '+995 32 2 XX XX XX',
-    website: 'www.tbel.edu.ge',
+    website: 'www.tbeli.ge',
     programCount: 9,
     priceRange: '2250 ₾',
     category: 'უნივერსიტეტი',
