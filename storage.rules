@@ -19,5 +19,12 @@ service firebase.storage {
                    request.resource.size < 5 * 1024 * 1024 &&
                    request.resource.contentType.matches('image/.*');
     }
+
+    match /news-images/{imageId} {
+      allow read: if true;
+      allow write: if isAdmin() && 
+                   request.resource.size < 5 * 1024 * 1024 &&
+                   request.resource.contentType.matches('image/.*');
+    }
   }
 }

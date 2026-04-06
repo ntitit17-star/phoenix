@@ -2,6 +2,7 @@ import React from 'react';
 import { Hero } from '../components/Hero';
 import { MapsPlaceholder } from '../components/MapsPlaceholder';
 import { ContactForm } from '../components/ContactForm';
+import { NewsSection } from '../components/NewsSection';
 import { PhoenixLogo } from '../components/Logo';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
@@ -67,6 +68,9 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* News & Blog Section */}
+      <NewsSection />
 
       {/* Education Categories Section */}
       <section className="py-12 relative">

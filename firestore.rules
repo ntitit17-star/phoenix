@@ -51,6 +51,16 @@ service cloud.firestore {
              data.faculties is list && data.faculties.size() < 100;
     }
 
+    function isValidNews(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() < 100 &&
+             data.title is string && data.title.size() > 0 && data.title.size() < 500 &&
+             data.content is string && data.content.size() > 0 && data.content.size() < 50000 &&
+             data.image is string && data.image.size() > 0 && data.image.size() < 2000 &&
+             data.date is string && data.date.size() > 0 &&
+             data.category in ['სიახლე', 'ბლოგი'] &&
+             (!('author' in data) || (data.author is string && data.author.size() < 200));
+    }
+
     function isAdmin() {
       // Default admin check using the user's email
       return isAuthenticated() && 
@@ -69,6 +79,16 @@ service cloud.firestore {
       // Only admins can create or update university data
       allow create: if isAdmin() && isValidUniversity(request.resource.data);
       allow update: if isAdmin() && isValidUniversity(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /news/{newsId} {
+      // Allow everyone to read news
+      allow read: if true;
+      
+      // Only admins can manage news
+      allow create: if isAdmin() && isValidNews(request.resource.data);
+      allow update: if isAdmin() && isValidNews(request.resource.data);
       allow delete: if isAdmin();
     }
 

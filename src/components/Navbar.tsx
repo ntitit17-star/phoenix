@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PhoenixLogo } from './Logo';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, Settings } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 
 const navLinks = [
   { name: 'აბიტურიენტებისთვის', href: '/#entrants' },
@@ -16,14 +18,43 @@ const navLinks = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      unsubscribe();
+    };
   }, []);
+
+  const handleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
+  const isAdmin = user?.email === 'ntitit17@gmail.com';
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('/#')) {
@@ -75,6 +106,34 @@ export const Navbar = () => {
               {link.name}
             </Link>
           ))}
+          
+          {isAdmin && (
+            <Link
+              to="/admin/news"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-phoenix-cyan/10 text-phoenix-cyan border border-phoenix-cyan/20 hover:bg-phoenix-cyan/20 transition-all text-sm font-bold"
+            >
+              <Settings className="w-4 h-4" />
+              ადმინი
+            </Link>
+          )}
+
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="p-2 text-white/60 hover:text-phoenix-magenta transition-colors"
+              title="გამოსვლა"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm font-bold"
+            >
+              <LogIn className="w-4 h-4" />
+              შესვლა
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -106,6 +165,35 @@ export const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+              
+              {isAdmin && (
+                <Link
+                  to="/admin/news"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2 text-lg font-medium text-phoenix-cyan"
+                >
+                  <Settings className="w-5 h-5" />
+                  ადმინ პანელი
+                </Link>
+              )}
+
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 text-lg font-medium text-phoenix-magenta"
+                >
+                  <LogOut className="w-5 h-5" />
+                  გამოსვლა
+                </button>
+              ) : (
+                <button
+                  onClick={handleLogin}
+                  className="flex items-center gap-2 text-lg font-medium text-phoenix-cyan"
+                >
+                  <LogIn className="w-5 h-5" />
+                  შესვლა
+                </button>
+              )}
             </div>
           </motion.div>
         )}

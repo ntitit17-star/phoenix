@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { UniversitiesPage } from './pages/UniversitiesPage';
+import { AdminNewsPage } from './pages/AdminNewsPage';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/universities" element={<UniversitiesPage />} />
+          <Route path="/admin/news" element={<AdminNewsPage />} />
         </Routes>
 
         <Footer />

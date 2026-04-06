@@ -27,12 +27,31 @@
         }
       },
       "required": ["id", "name", "logo", "type", "city", "address", "phone", "website", "priceRange", "category", "faculties"]
+    },
+    "News": {
+      "title": "News",
+      "description": "A news article or blog post.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the news item." },
+        "title": { "type": "string", "description": "Headline of the news." },
+        "content": { "type": "string", "description": "Full text of the article." },
+        "image": { "type": "string", "description": "URL of the featured image." },
+        "date": { "type": "string", "format": "date-time", "description": "Publication date." },
+        "category": { "type": "string", "enum": ["სიახლე", "ბლოგი"], "description": "Type of content." },
+        "author": { "type": "string", "description": "Author of the post." }
+      },
+      "required": ["id", "title", "content", "image", "date", "category"]
     }
   },
   "firestore": {
     "universities": {
       "schema": "University",
       "description": "Collection of all higher educational institutions."
+    },
+    "news": {
+      "schema": "News",
+      "description": "Collection of news and blog posts."
     }
   }
 }
